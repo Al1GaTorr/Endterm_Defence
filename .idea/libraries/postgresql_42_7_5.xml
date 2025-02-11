@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="postgresql-42.7.5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/postgresql-42.7.5.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/mysql-connector-j-9.2.0/mysql-connector-j-9.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ideaLibSources/postgresql-42.7.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
