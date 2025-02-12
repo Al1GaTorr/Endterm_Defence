@@ -32,7 +32,7 @@ class CarDealership {
         return cars;
     }
     public void clearDatabase() {
-        String query = "DELETE FROM cars"; // Удаляет все записи из базы
+        String query = "DELETE FROM cars"; 
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement()) {
             stmt.executeUpdate(query);
