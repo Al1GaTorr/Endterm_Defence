@@ -8,7 +8,7 @@ class DatabaseConnection {
     private static final String USER = "postgres";
     private static final String PASSWORD = "875173";
 
-    // Открытие нового соединения при каждом вызове
+
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
@@ -36,9 +36,9 @@ class CarDealership {
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement()) {
             stmt.executeUpdate(query);
-            System.out.println("База данных очищена.");
+            System.out.println("DB has successfully cleared.");
         } catch (SQLException e) {
-            System.err.println("Ошибка при очистке базы данных: " + e.getMessage());
+            System.err.println("Error in clearing database: " + e.getMessage());
         }
     }
 
@@ -58,7 +58,7 @@ class CarDealership {
                 cars.add(car);
             }
         } catch (SQLException e) {
-            System.err.println("Ошибка при загрузке автомобилей: " + e.getMessage());
+            System.err.println("Error in loading cars: " + e.getMessage());
         }
     }
 
@@ -73,12 +73,12 @@ class CarDealership {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                car.setId(rs.getInt(1)); // Устанавливаем новый id
+                car.setId(rs.getInt(1));
             }
 
             cars.add(car);
         } catch (SQLException e) {
-            System.err.println("Ошибка при добавлении автомобиля: " + e.getMessage());
+            System.err.println("Error in adding car: " + e.getMessage());
         }
     }
     public void removeCarfromDatabase(Car car) {
@@ -90,13 +90,13 @@ class CarDealership {
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
                 cars.remove(car);
-                loadCarsFromDatabase(); // Перезагружаем список после удаления!
-                System.out.println("Автомобиль удален: " + car.getBrand() + " " + car.getModel());
+                loadCarsFromDatabase();
+                System.out.println("Car was deleted: " + car.getBrand() + " " + car.getModel());
             } else {
-                System.out.println("Автомобиль не найден.");
+                System.out.println("Car not found.");
             }
         } catch (SQLException e) {
-            System.err.println("Ошибка при удалении автомобиля: " + e.getMessage());
+            System.err.println("Error in deleting car: " + e.getMessage());
         }
     }
 
@@ -119,7 +119,7 @@ class CarDealership {
             stmt.setInt(2, car.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("Ошибка при обновлении количества: " + e.getMessage());
+            System.err.println("Error in stock quantity:  " + e.getMessage());
         }
     }
 }
@@ -142,7 +142,7 @@ class Car {
         return id;
     }
 
-    public void setId(int id) { // Добавляем сеттер для ID
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -235,7 +235,7 @@ class GUI_Endterm extends JFrame {
         }
         Car car = new Car(0, brand, model, stock);
         dealership.addCarToDatabase(car);
-        dealership.loadCarsFromDatabase(); // Перезагружаем данные из базы данных
+        dealership.loadCarsFromDatabase();
         outputArea.append("Added Car: " + brand + " " + model + " (" + stock + " in stock)\n");
     }
     private void removeCar() {
@@ -266,8 +266,8 @@ class GUI_Endterm extends JFrame {
     }
 
     private void displayCars() {
-        dealership.loadCarsFromDatabase(); // Обновляем список машин перед выводом
-        outputArea.setText(""); // Очистка перед выводом
+        dealership.loadCarsFromDatabase();
+        outputArea.setText("");
         outputArea.append("\n--- Car Inventory ---\n");
         for (Car car : dealership.getCars()) {
             outputArea.append(car.getBrand() + " " + car.getModel() + " - Stock: " + car.getQuantityInStock() + "\n");
